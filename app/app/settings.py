@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'problems.apps.ProblemsConfig',
     'api.apps.ApiConfig',
     'answer.apps.AnswerConfig',
+    'register.apps.RegisterConfig',
+    'profil.apps.ProfilConfig',
 ]
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
