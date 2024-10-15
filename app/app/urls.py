@@ -6,5 +6,6 @@ urlpatterns = [
     path('', include("problems.urls")),
     path('api/', include("api.urls")),
     path('answer/', include("answer.urls")),
+    path('profile/', include("profil.urls")),
 
 ]

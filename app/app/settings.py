@@ -39,12 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # my framework
     'rest_framework',
+    # "django_htmx" ,
     # myapp
     'problems.apps.ProblemsConfig',
     'api.apps.ApiConfig',
     'answer.apps.AnswerConfig',
     'register.apps.RegisterConfig',
     'profil.apps.ProfilConfig',
+    'language.apps.LanguageConfig',
+
 ]
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -55,6 +58,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    # "django_htmx.middleware.HtmxMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
