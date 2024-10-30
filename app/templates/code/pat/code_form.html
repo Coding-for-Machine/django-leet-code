@@ -1,0 +1,141 @@
+
+
+<form metod="POST" action="." hx-post="{{problem.get_absolute_url}}" hx-target="#ouput" >
+    {% csrf_token %}
+    {% include "code/navbar.html" %}
+    <div class=" z-[50px] mt-5 flex flex-row w-full h-vh mt-[15px]">
+        <section class="w-full max-w-screen-lg  mx-auto">
+            <div class="relative h-64 rounded-lg bg-white">
+                <div class="flex grow h-full">
+                    <div x-data="componentState()" x-init="init()" x-ref="root" :style="'max-width: 100%; width: ' + width" class="relative sm:pr-11">
+                        <div x-ref="component" class="flex flex-col flex-auto groh-lvh w-full rounded-tl-lg rounded-bl-lg overflow-hidden">
+                            <div class="relative  w-full h-lvh p-4 border bg-slate-50 overflow-x-hidden ">
+                                <!-- component/ start -->
+                                <div class="flex flex-col text-xl ">
+    
+                                    
+                                    <!-- component -->
+                                {% include "code/yorliq.html" %}
+                                    
+                                </div>
+                                <!-- component/ end -->
+                            </div>
+                        </div>
+                        <!-- <div :class="{ 'pointer-events-none': !resizing }" class="hidde absolute opacity- 0 inset-0 mr -4 sm:block">X</div> -->
+                        <button
+                         x-ref="handle" @pointerdown="onResizeStart($event)" class="h-screen sr-only sm:not-sr-only sm:border sm:border-l-0 sm:bg-gray-50 sm:absolute sm:right-0 sm:inset-y-0 sm:flex sm:items-center sm:justify-center sm:w-11 rounded-tr-lg rounded-br-lg sm:h-screen sm:top- 1/2 sm:-translate-y- 1/2" style="cursor: ew-resize; touch-action: none;">
+                            <!-- <div class="absolute inset-y-0 -inset-x-2">D</div> -->
+                            <svg aria-hidden="true" class="h-6 w-6 text-gray-600 pointer-events-none" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5h2v14H8zM14 5h2v14h-2z"></path>
+                            </svg>
+                           
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>  
+        <section class="w-full max-w-screen-lg  mx-auto">
+            <div class="relative h-64 rounded-lg bg-white">
+                <div class="flex grow h-full">
+                    <div x-data="componentState()" x-init="init()" x-ref="root" :style="'max-width: 100%; width: ' - width" class="relative sm:pr-11">
+                        <div x-ref="component" class="flex flex-col flex-auto groh-lvh w-full rounded-tl-lg rounded-bl-lg overflow-hidden">
+                            <div class="relative  w-full h-lvh p-4 border bg-slate-50 overflow-x-hidden ">
+                                <!-- component/ start -->
+                                <div class="flex flex-col text-xl ">
+                                <label for="countries" class=" block mb-2 text-sm font-medium text-gray-600 w-full">
+                                    <div class="flex flex-rows content-center gap-2 items-center justify-center">
+                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14"/>
+                                        </svg>
+                                        
+                                        <p>Kod<p>
+                                    </div>
+                                </label>
+                    
+                                <select class="h-8 border border-gray-300 text-gray-600 text-base rounded-lg block w-full py-1 px-2 focus:outline-none" aria-label=".form-select-lg" name="language">
+                                    {% for l in language %}
+                                        <option value="{{l.name}}">{{l.name}}</option>
+                                    {% endfor %}
+                                </select>
+                    
+                                <textarea id='code' name='code' rows='auto' class="code w-full mx-auto h-36"></textarea>
+                                {% comment %} <input type="submit" value="Submit" /> {% endcomment %}
+                                <button type="submit">add</button>
+                            
+                                <div id="ouput" class=" w-full">
+                                        
+                                        <div class="flex flex-no-wrap overflow-x-scroll overflow-y-scroll   scrolling-touch justify-center h-92 w-full bg-white">
+                                            {% comment %} <div class="flex flex-no-wrap overflow-x-scroll  scrolling-touch justify-center h-92 w-full bg-white">
+                                                <div class="flex flex-rows w-24">
+                                                        <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                        <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                        <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                        <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                        <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                </div>
+                                            </div> {% endcomment %}
+                                            <div class="flex flex-rows w-24" id='project-list2'>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                    <p class="w-24 h-24 rounded-full p-12">asad</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div :class="{ 'pointer-events-none': !resizing }" class="hidde absolute opacity- 0 inset-0 mr -4 sm:block">X</div> -->
+                        <button
+                         x-ref="handle" @pointerdown="onResizeStart($event)" class="h-screen sr-only sm:not-sr-only sm:border sm:border-l-0 sm:bg-gray-50 sm:absolute sm:right-0 sm:inset-y-0 sm:flex sm:items-center sm:justify-center sm:w-11 rounded-tr-lg rounded-br-lg sm:h-screen sm:top- 1/2 sm:-translate-y- 1/2" style="cursor: ew-resize; touch-action: none;">
+                            <!-- <div class="absolute inset-y-0 -inset-x-2">D</div> -->
+                            <svg aria-hidden="true" class="h-6 w-6 text-gray-600 pointer-events-none" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5h2v14H8zM14 5h2v14h-2z"></path>
+                            </svg>
+                           
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>  
+            
+</form>
+<div id="messages"  hx-swap-oob="outerHTML" >
+    {% include "dj_message/message.html" %}
+</div>
+
+    {% comment %} end parint dev  {% endcomment %}

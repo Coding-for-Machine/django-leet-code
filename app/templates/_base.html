@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
+    rel="stylesheet"
+  />
+    <link rel="stylesheet" href="{% static 'src/styles.css' %}" />
+    <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.5.x/dist/component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+     <!-- htmx -->
+     {% comment %} <script src="https://unpkg.com/htmx.org@2.0.3"></script> {% endcomment %}
+    {% comment %} codemirror  {% endcomment %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
+{% comment %} end codemirror {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/abbott.min.css"></link>
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/perl/perl.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
+    <title>{% block title %}
+        
+        {% endblock title %}</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}"></link>
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' ><!---->
+
+      {% comment %} {% include "navbar.html" %} {% endcomment %}
+      {% block content %}
+      {% endblock content %}
+  
+
+
+     <script type="module" src="{% static 'js/main.js' %}"></script>
+
+    <!-- new -->
+    {% comment %} {% compress js %}
+      <script type="text/javascript" src="{% static 'src/htmx.js' %}"></script>
+    {% endcompress %} {% endcomment %}
+
+    <!-- new -->
+     <!--codemirror-->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/show-hint.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/show-hint.min.css"></script>
+     
+ 
+     <script>
+         // Initialize CodeMirror
+         const editor = CodeMirror.fromTextArea(document.querySelector("textarea"), {
+             lineNumbers: true,
+             mode: "text/x-python",
+             theme: "dracula",
+             tabSize: 4,
+             indentWithTabs: true,
+             extraKeys: {
+                 "Ctrl-Space": "autocomplete" // Trigger auto-completion with Ctrl + Space
+             }
+         });
+     
+         // Function to open a file
+         function openFile() {
+             const input = document.createElement('input');
+             input.type = 'file';
+             input.accept = '.py';
+             input.onchange = e => {
+                 const file = e.target.files[0];
+                 const reader = new FileReader();
+                 reader.onload = function(event) {
+                     editor.setValue(event.target.result);
+                 };
+                 reader.readAsText(file);
+             };
+             input.click();
+         }
+     
+         // Function to save a file
+         function saveFile() {
+             const blob = new Blob([editor.getValue()], { type: 'text/plain' });
+             const link = document.createElement('a');
+             link.href = window.URL.createObjectURL(blob);
+             link.download = 'code.py';
+             link.click();
+         }
+     
+         // Example of a simple auto-completion function
+         CodeMirror.registerHelper("hint", "python", function(editor) {
+             const cursor = editor.getCursor();
+             const token = editor.getTokenAt(cursor);
+             const word = token.string;
+             const suggestions = [
+                 "print", "def", "class", "if", "else", "elif", "for", "while", 
+                 "return", "import", "from", "as", "with", "try", "except", 
+                 "finally", "lambda", "map", "filter", "reduce", "len", "range", 
+                 "str", "int", "float", "list", "dict", "set", "tuple"
+             ];
+             
+             const filteredSuggestions = suggestions.filter(s => s.startsWith(word));
+             
+             return {
+                 list: filteredSuggestions,
+                 from: CodeMirror.Pos(cursor.line, token.start),
+                 to: CodeMirror.Pos(cursor.line, token.end)
+             };
+         });
+      function componentState() {
+        return {
+            resizing: false,
+            width: '100%',
+            resizeStartX: 0,
+            resizeStartW: 0,
+            init() {
+                this.onResize = this.onResize.bind(this);
+                this.onResizeEnd = this.onResizeEnd.bind(this);
+            },
+            onResizeStart(e) {
+                document.documentElement.classList.add("resizing");
+                this.resizing = true;
+                this.resizeStartX = e.pageX;
+                this.resizeStartW = this.$refs['root'].clientWidth;
+                window.addEventListener('pointermove', this.onResize);
+                window.addEventListener('pointerup', this.onResizeEnd);
+            },
+            onResizeEnd() {
+                this.resizing = false;
+                window.removeEventListener('pointermove', this.onResize);
+                window.removeEventListener('pointerup', this.onResizeEnd);
+                this.$refs['root'].width = this.$refs['root'].parentElement.clientWidth;
+            },
+            onResize(e) {
+                var t = Math.round(this.resizeStartW + (e.pageX - this.resizeStartX));
+                this.width = "".concat(Math.max(0, t), "px")
+            }
+        }
+    }
+    
+  
+   
+    </script>
+    <script src="{% static "js/navbar.js" %}" type="scripttype"></script>
+
+  </body>
+</html>

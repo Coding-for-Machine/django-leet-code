@@ -1,0 +1,15 @@
+
+
+<form action='.' method="POST">
+    {% csrf_token %}
+    <select class="form-select" aria-label=".form-select-lg" name="language">
+        {% for l in language %}
+            <option value="{{l.name}}">{{l.name}}</option>
+        {% endfor %}
+    </select>
+    <textarea name="code", value='code'></textarea>
+    <button>add</button>
+</form>
+
+{% comment %} {{error}}-----{{stdout}} {% endcomment %}
+
