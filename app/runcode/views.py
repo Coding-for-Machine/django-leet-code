@@ -14,11 +14,6 @@ import time
 User = get_user_model()
 
 
-
-def home_page(request):
-    # problems = Problems.objects.all()
-    return render(request, 'home/index.html', {})
-
 def hx_home_page(request):
     url_home = reverse('runcode:hx-home-list')
     # problems = Problems.objects.all()

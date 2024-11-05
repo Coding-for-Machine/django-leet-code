@@ -3,5 +3,5 @@ Salom {{ user.username }},
 
 Roʻyxatdan oʻtishni tasdiqlash uchun quyidagi havolani bosing:
 
-http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+http://{{ domain }}{% url 'register:activate' uidb64=uid token=token %}
 {% endautoescape %}

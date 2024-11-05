@@ -1,7 +1,11 @@
 from django.urls import path
-from .views import LanguageCategory
+from .views import home_page, darslik_page
+
+
+app_name = "cursapp"
 
 urlpatterns = [
-    path("", LanguageCategory, name='categoryalanguage'),
-    
+    path("", home_page, name="index"),
+    path("dars/", darslik_page, name="darslik"),
+
 ]

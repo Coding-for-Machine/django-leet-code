@@ -9,10 +9,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include('runcode.urls')),
+    path("problems/", include('runcode.urls')),
     path("unittest/", include('unittestproblems.urls')),
     path("register/", include('register.urls')),
-    path("cursapp/", include('cursapp.urls')),
+    path("", include('cursapp.urls')),
     path("profile/", include('profiles.urls')),
     # roter
     path("__reload__/", include("django_browser_reload.urls")),

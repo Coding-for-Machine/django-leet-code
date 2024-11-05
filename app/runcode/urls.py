@@ -1,11 +1,11 @@
 from django.urls import path
-from .views import home_page, code_page, problems_list
+from .views import  code_page, problems_list
 from .run import run_code
+
 app_name="runcode"
 
 urlpatterns = [
-    path("", home_page, name="index"),
-    path("problems/", problems_list, name="problems-list"),
+    path("", problems_list, name="problems-list"),
     path("code/<int:id>/<slug:slug>/", code_page, name="run_code"),
     path("api/<str:problem_id>/", run_code),
 ]

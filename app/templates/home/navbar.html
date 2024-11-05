@@ -20,15 +20,15 @@
             class="absolute right-4 top-full hidden w-full max-w-[250px] rounded-lg bg-white dark:bg-dark-2 py-5 shadow-lg lg:static lg:block lg:w-full lg:max-w-full lg:bg-transparent dark:lg:bg-transparent lg:py-0 lg:px-4 lg:shadow-none xl:px-6">
             <ul class="blcok lg:flex 2xl:ml-20">
               <li class="relative group">
-                <a href="/#home"
+                <a href="{% url "cursapp:index" %}"
                   class="flex py-2 mx-8 text-base font-medium ud-menu-scroll text-dark dark:text-white group-hover:text-primary lg:mr-0 lg:inline-flex lg:py-6 lg:px-0 lg:text-body-color dark:lg:text-dark-6">
-                  Home
+                  Bosh sahifaga
                 </a>
               </li>
               <li class="relative group">
-                <a href="/#about"
+                <a href="{% url "cursapp:darslik" %}"
                   class="flex py-2 mx-8 text-base font-medium ud-menu-scroll text-dark dark:text-white group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:text-body-color dark:lg:text-dark-6 xl:ml-10">
-                  About
+                  Darslik
                 </a>
               </li>
               <li class="relative group">
@@ -105,7 +105,7 @@
             </ul>
           </nav>
         </div>
-        <div class="flex items-center justify-end pr-16 lg:pr-0">
+        <div class="flex items-center gap-4 justify-end pr-16 lg:pr-0">
           <label for="themeSwitcher" class="inline-flex items-center cursor-pointer" aria-label="themeSwitcher"
             name="themeSwitcher">
             <input type="checkbox" name="themeSwitcher" id="themeSwitcher" class="sr-only" />
@@ -169,15 +169,23 @@
               </svg>
             </span>
           </label>
-          <div class="hidden sm:flex">
-            <a href="signin.html"
-              class="loginBtn py-2 px-[22px] text-base font-medium text-dark dark:text-white hover:opacity-70">
-              Sign In
+          <div class="hidden sm:flex mx-10">
+            {% if request.user.is_authenticated %}
+              <a href="{% url "register:logout" %}"
+              class="py-2 px-[22px]  text-base font-medium text-white duration-300 ease-in-out rounded-md signUpBtn bg-primary hover:bg-blue-dark">
+              Chiqish
             </a>
-            <a href="signup.html"
-              class="px-6 py-2 text-base font-medium text-white duration-300 ease-in-out rounded-md signUpBtn bg-primary hover:bg-blue-dark">
-              Sign Up
-            </a>
+               {% else %} 
+              <a href="{% url "register:login" %}"
+                class="loginBtn py-2 px-[22px] text-base font-medium text-dark dark:text-white hover:opacity-70">
+                Tizimga kirish
+              </a>
+              <a href="{% url "register:register" %}"
+                class="py-2 px-[22px] text-base font-medium text-white duration-300 ease-in-out rounded-md signUpBtn bg-primary hover:bg-blue-dark">
+                Ro'yxatdan o'tish
+              </a>
+            {% endif %}
+
           </div>
         </div>
       </div>
