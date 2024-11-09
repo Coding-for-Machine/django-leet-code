@@ -1,3 +1,4 @@
+
 <section class="container px-4 mx-auto">
     <div class="sm:flex sm:items-center sm:justify-between">
         <div>
@@ -82,7 +83,7 @@
                                 </th>
 
                                 <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Xolat
+                                    Qiyinchilik
                                 </th>
 
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -103,35 +104,48 @@
                             <tr>
                                 <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                     <div>
-                                        <h2 class="font-medium text-gray-800 dark:text-white ">Catalog</h2>
-                                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">catalogapp.io</p>
+                                        <a href="{{ p.get_absolute_url}}"><p class="font-medium text-gray-800 dark:text-white ">{{p.name}}</p></a>
                                     </div>
                                 </td>
                                 <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                     <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        Customer
+                                        <p>{{p.body|slice:":20"}}</p>
                                     </div>
                                 </td>
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                     <div>
-                                        <p class="text-gray-500 dark:text-gray-400">{{p.name}}</p>
+                                        {% if p.status.lower == "oson" %}
+                                        <p class="text-green-500 dark:text-gray-400">{{p.status}}</p>
+                                        {% elif p.status.lower == "qiyin"%}
+                                        <p class="text-red-600 dark:text-gray-400">{{p.status}}</p>
+                                        {% else %}
+                                        <p class="text-yellow-500 dark:text-gray-400">{{p.status}}</p>
+
+                                        {% endif %}
                                     </div>
                                 </td>
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                     <div class="flex items-center">
-                                        {% comment %} {% for u in p.answer_set.all().order_by("-id")[0:4] %} {% endcomment %}
-                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1256&q=80" alt="">
-                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                        {% comment %} {% endfor %} {% endcomment %}
+                                        {% for u in p.answer_set.all %}
+                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="{{ u.user.profile.avatar.url }}" alt=".">
+                                        {% endfor %}
+                                        {% if p.answer_set.all.count >= 4 %}
                                         <p class="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">+4</p>
+                                        {% endif %}
                                     </div>
                                 </td>
 
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                     <div class="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
-                                        <div class="bg-blue-500 w-2/3 h-1.5"></div>
+                                        <div class="w-full">
+                                            {% for a in p.answer_set.all %}
+                                            {% if request.user == a.user %}
+                                                <div class="bg-blue-500 h-1.5" style="width: 100%;"></div>
+                                            {% else %}
+                                                <div class="bg-red-600 h-1.5" style="width: 100%;"></div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </td>
 

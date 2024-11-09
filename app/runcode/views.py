@@ -8,6 +8,8 @@ from .run import run_code
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
+from profiles.models import Profile
 # run 
 # Create your views here.
 import time
@@ -20,7 +22,8 @@ def hx_home_page(request):
     return render(request, 'home/home_loading.html', {"url_home": url_home})
 
 def problems_list(request):
-    user = get_object_or_404(User, id=request.user.id)
+    # user = get_object_or_404(User, id=request.user.id)
+    profiles = Profile.objects.all().count()
     time.sleep(1)
     problems = Problems.objects.all()
     paginator = Paginator(problems, 3)
@@ -33,7 +36,7 @@ def problems_list(request):
     except EmptyPage:
     # If page_number is out of range get last page of results
         posts = paginator.page(paginator.num_pages)
-    return render(request, "problems/problem_list.html",{"problems": posts, 'user':user})
+    return render(request, "problems/problem_list.html",{"problems": posts,"profiles":profiles})
 
 # def problems_list(request):
 #     url = reverse("runcode:hx-problems-list")
@@ -70,5 +73,5 @@ def code_page(request, id, slug):
             return HttpResponse(run_code(request, id))
     if request.htmx:
         return render(request, 'code/create_form_code.html',context )
-    return render(request, 'code/code.html',context )
+    return render(request, 'code/cod.html',context )
 

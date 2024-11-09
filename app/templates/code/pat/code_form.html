@@ -3,7 +3,7 @@
 <form metod="POST" action="." hx-post="{{problem.get_absolute_url}}" hx-target="#ouput" >
     {% csrf_token %}
     {% include "code/navbar.html" %}
-    <div class=" z-[50px] mt-5 flex flex-row w-full h-vh mt-[15px]">
+    <div class=" z-[50px]  flex flex-row w-full h-vh mt-[15px]">
         <section class="w-full max-w-screen-lg  mx-auto">
             <div class="relative h-64 rounded-lg bg-white">
                 <div class="flex grow h-full">
@@ -52,15 +52,7 @@
                                     </div>
                                 </label>
                     
-                                <select class="h-8 border border-gray-300 text-gray-600 text-base rounded-lg block w-full py-1 px-2 focus:outline-none" aria-label=".form-select-lg" name="language">
-                                    {% for l in language %}
-                                        <option value="{{l.name}}">{{l.name}}</option>
-                                    {% endfor %}
-                                </select>
-                    
-                                <textarea id='code' name='code' rows='auto' class="code w-full mx-auto h-36"></textarea>
-                                {% comment %} <input type="submit" value="Submit" /> {% endcomment %}
-                                <button type="submit">add</button>
+                                {% include "code/code_run.html" %}
                             
                                 <div id="ouput" class=" w-full">
                                         
