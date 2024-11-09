@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
     path('admin/', admin.site.urls),
     path("problems/", include('runcode.urls')),
     path("unittest/", include('unittestproblems.urls')),
@@ -16,9 +17,6 @@ urlpatterns = [
     path("profile/", include('profiles.urls')),
     # roter
     path("__reload__/", include("django_browser_reload.urls")),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-
-
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

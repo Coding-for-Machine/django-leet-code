@@ -1,5 +1,6 @@
 from django.db import models
-from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field
+
 # Create your models here.
 
 class CoursecategoryManager(models.Manager):
@@ -8,8 +9,7 @@ class CoursecategoryManager(models.Manager):
 
 class Coursecategory(models.Model):
     title = models.CharField(max_length=250, help_text="Dasturlash Tilini yoki Boshqa")
-    body = models.TextField()
-    
+    body = CKEditor5Field()
     active = models.BooleanField(default=True)
     objects = models.Manager()
     published = CoursecategoryManager()
@@ -25,7 +25,7 @@ class BobManager(models.Manager):
     
 class Bob(models.Model):
     title = models.CharField(max_length=250, help_text="Dasturlash Tilini yoki Boshqa")
-    body = models.TextField()
+    body = CKEditor5Field()
     coursecategory = models.ForeignKey(Coursecategory, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     objects = models.Manager()
@@ -42,7 +42,7 @@ class MavzuManager(models.Manager):
 
 class Mavzu(models.Model):
     title = models.CharField(max_length=250, help_text="Dasturlash Tilini yoki Boshqa")
-    body = models.TextField()
+    body = CKEditor5Field()
     bob = models.ForeignKey(Bob, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     objects = models.Manager()
@@ -59,7 +59,7 @@ class MavzutanasiManager(models.Manager):
 
 class Mavzutanasi(models.Model):
     title = models.CharField(max_length=250, help_text="Dasturlash Tilini yoki Boshqa")
-    body = RichTextUploadingField()
+    body = CKEditor5Field()
     bob = models.ForeignKey(Bob, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     objects = models.Manager()

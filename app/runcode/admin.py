@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import Problemimage, Problems, Answer, Comments, Tage, Category, Language, Unittestproblem, Algorithm
-
+from .models import  Problems, Answer, Comments, Tage, Category, Language, Unittestproblem, Algorithm
+from .forms import ProblemsForms
 # Register your models here.
 
-
-admin.site.register(Problems)
-admin.site.register(Problemimage)
+# problems admin 
+class ProblemsAdmin(admin.ModelAdmin):
+    form = ProblemsForms
+admin.site.register(Problems, ProblemsAdmin)
 admin.site.register(Answer)
 admin.site.register(Comments)
 admin.site.register(Category)

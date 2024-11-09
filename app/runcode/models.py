@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django_ckeditor_5.fields import CKEditor5Field
 
 # from django.template.defaultfilters import slugify
 from django.utils.text import slugify
@@ -25,7 +26,7 @@ User = get_user_model()
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=250)
+    name = CKEditor5Field(max_length=250)
     body = models.TextField()
 
     def __str__(self):
@@ -56,7 +57,7 @@ class Problems(models.Model):
         default="OSON",
     )
     name = models.CharField(max_length=250)
-    body = models.TextField()
+    body = CKEditor5Field()
     slug = models.SlugField(max_length=250, blank=True)
     active = models.BooleanField(default=True)
     language = models.ManyToManyField(Language, default="python")
@@ -86,12 +87,6 @@ class Problems(models.Model):
     def get_absolute_url(self):
         return reverse("runcode:run_code", kwargs={"id": self.id, "slug": self.slug})
 
-
-class Problemimage(models.Model):
-    problem = models.ForeignKey(Problems, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="problim/image/")
-    created = models.DateTimeField(auto_now=True)
-    updated = models.DateTimeField(auto_now_add=True)
 
 
 class Answer(models.Model):

@@ -1,230 +1,165 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
-{% block css  %}
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"></script>
+{% block css %}
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"></script>
   <link rel="stylesheet" href="{% static 'resizejs/resize.css' %}" />
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <!-- import codemirror stylings -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
   <!-- install codemirror.js version /5.63.3 from cdn -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/codemirror.min.js"
-  integrity="sha512-XMlgZzPyVXf1I/wbGnofk1Hfdx+zAWyZjh6c21yGo/k1zNC4Ve6xcQnTDTCHrjFGsOrVicJsBURLYktVEu/8vQ=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/codemirror.min.js" integrity="sha512-XMlgZzPyVXf1I/wbGnofk1Hfdx+zAWyZjh6c21yGo/k1zNC4Ve6xcQnTDTCHrjFGsOrVicJsBURLYktVEu/8vQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- install codemirror python language support -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/mode/python/python.min.js"
-  integrity="sha512-/mavDpedrvPG/0Grj2Ughxte/fsm42ZmZWWpHz1jCbzd5ECv8CB7PomGtw0NAnhHmE/lkDFkRMupjoohbKNA1Q=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  {% comment %} confit  {% endcomment %}
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <!-- import codemirror dracula theme styles from cdn -->
-   <!--Tailwind css-->
-   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/mode/python/python.min.js" integrity="sha512-/mavDpedrvPG/0Grj2Ughxte/fsm42ZmZWWpHz1jCbzd5ECv8CB7PomGtw0NAnhHmE/lkDFkRMupjoohbKNA1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Tailwind css -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* set codemirror ide height to 100% of the textarea */
-    /* From Uiverse.io by hamoode-taha-04 */ 
-.ui-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 5px;
-    color: rgb(219, 218, 218);
-    border-style: solid;
-    background-color: transparent;
-    border-color: rgb(219, 218, 218);
-    width: 40px;
-    height: 40px;
-    transition: 0.2s ease;
-    text-transform: uppercase;
-    border-width: 2px;
-    font-weight: 500;
-    font-size: 18px;
-    letter-spacing: 2px;
-  }
-  .ui-btn:hover {
-    color: rgb(247, 247, 247);
-    background-color: rgb(202, 25, 25);
-    border-color: rgb(202, 25, 25);
-    text-shadow: 0 0 50px white, 0 0 20px white, 0 0 15px white;
-    box-shadow: 0 0 50px rgb(202, 25, 25), 0 0 30px rgb(202, 25, 25),
-      0 0 60px rgb(202, 25, 25), 0 0 120px rgb(202, 25, 25);
-    font-size: 20px;
-    width: 130px;
-    height: 50px;
-    letter-spacing: 3px;
-  }
-  .ui-btn:active {
-    width: 115px;
-    height: 38px;
-    letter-spacing: 0px;
-  }
-  
+    /* From Uiverse.io by hamoode-taha-04 */
+    .ui-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 5px;
+      color: rgb(219, 218, 218);
+      border-style: solid;
+      background-color: transparent;
+      border-color: rgb(219, 218, 218);
+      width: 40px;
+      height: 40px;
+      transition: 0.2s ease;
+      text-transform: uppercase;
+      border-width: 2px;
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 2px;
+    }
+    .ui-btn:hover {
+      color: rgb(247, 247, 247);
+      background-color: rgb(202, 25, 25);
+      border-color: rgb(202, 25, 25);
+      text-shadow: 0 0 50px white, 0 0 20px white, 0 0 15px white;
+      box-shadow: 0 0 50px rgb(202, 25, 25), 0 0 30px rgb(202, 25, 25), 0 0 60px rgb(202, 25, 25),
+        0 0 120px rgb(202, 25, 25);
+      font-size: 20px;
+      width: 130px;
+      height: 50px;
+      letter-spacing: 3px;
+    }
+    .ui-btn:active {
+      width: 115px;
+      height: 38px;
+      letter-spacing: 0px;
+    }
+    
     textarea {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        width: 100%;
-        height: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      width: 100%;
+      height: 100%;
     }
     .CodeMirror {
       height: 100%;
     }
     #confettiCanvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none; /* Canvas ustida bosish mumkin emas */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Canvas ustida bosish mumkin emas */
     }
-    
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/theme/dracula.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/theme/dracula.css" />
 {% endblock %}
 
 {% block content %}
-  {% include "code/navbar.html" %}
+  {% include 'code/navbar.html' %}
   <div class="cont">
+    <canvas id="confettiCanvas"></canvas>
     <div class="column" id="left-column">
-        {% include "code/tabs.html" %}
-        
+      {% include 'code/tabs.html' %}
+      <div id="confettiCanvas"></div>
     </div>
     <div class="resizer" id="column-resizer">
-      <svg class="text-gray-400" fill="none" height="36" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><clipPath id="a"><path d="m0 .000916h24v24h-24z"/></clipPath><g clip-path="url(#a)"><path d="m18 3.00092v17.99998m-6-17.99998v17.99998m-6-17.99998v17.99998" stroke="#2a353d" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/></g></svg>
+      <p class="text-xs text-gray-700">| |</p>
     </div>
     <div class="column" id="right-column" class="m-6">
-        <div class="row" id="top-row">
-            {% include "code/input.html" %}
-        </div>
-        <div class="resizer" id="row-resizer">
-          <svg fill="none" height="14" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg"><g stroke="#2a353d" stroke-linecap="round" stroke-width="1.5"><path d="m4 8h16"/><path d="m4 16h16"/></g></svg>
-        </div>
-        <div class="row" id="bottom-row">
-            {% include "code/ouput.html" %}
-        </div>
+      <div class="row" id="top-row">
+        {% include 'code/input.html' %}
+      </div>
+      <div class="resizer" id="row-resizer">
+        <svg fill="none" height="14" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#2a353d" stroke-linecap="round" stroke-width="1.5">
+            <path d="m4 8h16" />
+            <path d="m4 16h16" />
+          </g>
+        </svg>
+      </div>
+      <div class="row" id="bottom-row">
+        {% include 'code/ouput.html' %}
+      </div>
     </div>
   </div>
-{% endblock content %}
+{% endblock %}
 {% block scripts %}
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.2.2/cdn.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script> 
-    <script src="{% static 'js/anim.js' %}"></script>
-    <script src="{% static 'resizejs/resize.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.2.2/cdn.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+  <script src="{% static 'js/anim.js' %}"></script>
+  <script src="{% static 'resizejs/resize.js' %}"></script>
 
-    <script>
-
-    // Initialize CodeMirror
-        // find the output element
-{% comment %} const output = document.getElementById("output");
-
-// initialize codemirror and pass configuration to support Python and the dracula theme
-const editor = CodeMirror.fromTextArea(
-  document.getElementById("code"), {
-    mode: {
-      name: "python",
-      version: 3,
-      singleLineStringErrors: false,
-    },
-    theme: "default",
-    lineNumbers: true,
-    indentUnit: 4,
-    matchBrackets: true,
-  }
-);
-// set the initial value of the editor
-editor.setValue("print('Hello world')");
-output.value = "Boshlanmoqda...\n";
-
-// add pyodide returned value to the output
-function addToOutput(stdout) {
-  output.value += ">>> " + "\n" + stdout + "\n";
-}
-
-// clean the output section
-function clearHistory() {
-  output.value = "";
-} {% endcomment %}
-
-// init pyodide and show sys.version when it's loaded successfully
-{% comment %} async function main() {
-  let pyodide = await loadPyodide({
-    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.20.0/full/",
-  });
-  output.value = pyodide.runPython(`
-    import sys
-    sys.version
-  `);
-  output.value += "\n" + "Tayyor!" + "\n";
-  return pyodide;
-}
-
-// run the main function
-let pyodideReadyPromise = main();
-
-// pass the editor value to the pyodide.runPython function and show the result in the output section
-    async function evaluatePython() {
-    let pyodide = await pyodideReadyPromise;
-    try {
-        pyodide.runPython(`
-        import io
-        sys.stdout = io.StringIO()
-        `);
-        let result = pyodide.runPython(editor.getValue());
-        let stdout = pyodide.runPython("sys.stdout.getvalue()");
-        addToOutput(stdout);
-    } catch (err) {
-        addToOutput(err);
+  <script>
+    const output = document.getElementById('output')
+    
+    const editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+      mode: {
+        name: 'python',
+        version: 3,
+        singleLineStringErrors: false
+      },
+      lineNumbers: true,
+      indentUnit: 4,
+      matchBrackets: true
+    })
+    
+    editor.setValue(`sum([1, 2, 3, 4, 5])`)
+    output.value = 'Boshlanmoqda...\n'
+    
+    async function main() {
+      let pyodide = await loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/' })
+      // Pyodide ready
+      output.value += 'Tayor\n'
+      return pyodide
     }
-    } {% endcomment %}
-    // -2-
-    const output = document.getElementById("output"); 
-
-    const editor = CodeMirror.fromTextArea(document.getElementById("code"), { 
-        mode: { 
-            name: "python", 
-            version: 3, 
-            singleLineStringErrors: false
-        }, 
-        lineNumbers: true, 
-        indentUnit: 4, 
-        matchBrackets: true
-    }); 
-
-    editor.setValue(`sum([1, 2, 3, 4, 5])`); 
-    output.value = "Boshlanmoqda...\n"; 
-
-    async function main() { 
-        let pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/" }); 
-        // Pyodide ready 
-        output.value += "Tayor\n"; 
-        return pyodide; 
-    }; 
-
-    let pyodideReadyPromise = main(); 
+    
+    let pyodideReadyPromise = main()
     // Qoshish
-    function addToOutput(s) { 
-        output.value += ">>>" + s + "\n"; 
-    } 
+    function addToOutput(s) {
+      output.value += '>' + s + '\n'
+    }
     // Tozalash-->
     function clearHistory() {
-        output.value = "";
+      output.value = ''
+    }
+    
+    async function evaluatePython() {
+      let pyodide = await pyodideReadyPromise
+      try {
+        console.log(editor.getValue())
+        let output = pyodide.runPython(editor.getValue())
+        addToOutput(output)
+      } catch (err) {
+        addToOutput(err)
       }
-      
-
-    async function evaluatePython() { 
-        let pyodide = await pyodideReadyPromise; 
-        try { 
-            console.log(editor.getValue()) 
-            let output = pyodide.runPython(editor.getValue()); 
-            addToOutput(output); 
-        } catch (err) { 
-            addToOutput(err); 
-        } 
-    } 
-
-    </script>
+    }
+  </script>
 {% endblock %}

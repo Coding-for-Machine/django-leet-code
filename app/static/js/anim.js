@@ -1,73 +1,77 @@
-// script.js
 const canvas = document.getElementById('confettiCanvas');
 const ctx = canvas.getContext('2d');
-
+// Set canvas size
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let particles = [];
+const colors = ['#FF0D72', '#0DC2FF', '#0DFF72', '#F3FF0D', '#FF7E0D'];
 
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+function renderWrappingConfetti() {
+    const timeDelta = 0.05;
+    const xAmplitude = 0.5;
+    const yAmplitude = 1;
+    const xVelocity = 2;
+    const yVelocity = 3;
 
-function createParticle(x, y) {
-    const colors = ['#FF0D72', '#0DC2FF', '#0DFF72', '#F0FF0D', '#FF7E0D'];
-    const particle = {
-        x: x,
-        y: y,
-        radius: randomInt(5, 10),
-        color: colors[randomInt(0, colors.length - 1)],
-        gravity: 0.2,
-        friction: 0.9,
-        bounce: randomInt(50, 70) / 100,
-        velocity: {
-            x: randomInt(-50, 50),
-            y: randomInt(-50, -20)
-        }
-    };
-    particles.push(particle);
-}
+    let time = 0;
+    const confetti = [];
 
-function updateParticles() {
-    for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.velocity.y += p.gravity;
-        p.x += p.velocity.x;
-        p.y += p.velocity.y;
-
-        if (p.y + p.radius > canvas.height) {
-            p.y = canvas.height - p.radius;
-            p.velocity.y *= -p.bounce;
-            p.velocity.x *= p.friction;
-        }
-
-        if (p.x + p.radius > canvas.width || p.x - p.radius < 0) {
-            p.velocity.x *= -1;
-        }
-    }
-}
-
-function drawParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let p of particles) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-    }
-}
-
-function animate() {
-    updateParticles();
-    drawParticles();
-    requestAnimationFrame(animate);
-}
-
-document.getElementById('startConfetti').addEventListener('click', () => {
     for (let i = 0; i < 100; i++) {
-        createParticle(randomInt(0, canvas.width), randomInt(0, canvas.height));
-    }
-});
+        const radius = Math.floor(Math.random() * 50) + 5; // Random radius
+        const tilt = Math.floor(Math.random() * 10) - 10;
+        const xSpeed = Math.random() * xVelocity - xVelocity / 2;
+        const ySpeed = Math.random() * yVelocity;
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height - canvas.height;
 
-animate();
+        confetti.push({
+            x,
+            y,
+            xSpeed,
+            ySpeed,
+            radius,
+            tilt,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            phaseOffset: i, // Randomness from position in list
+        });
+    }
+
+    function update() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confetti.forEach((piece) => {
+            piece.y += (Math.cos(piece.phaseOffset + time) + 1) * yAmplitude + piece.ySpeed;
+            piece.x += Math.sin(piece.phaseOffset + time) * xAmplitude + piece.xSpeed;
+
+            // Wrap around the canvas
+            if (piece.x < 0) piece.x = canvas.width;
+            if (piece.x > canvas.width) piece.x = 0;
+            if (piece.y > canvas.height) piece.y = 0;
+
+            ctx.beginPath();
+            ctx.lineWidth = piece.radius / 2;
+            ctx.strokeStyle = piece.color;
+            ctx.moveTo(piece.x + piece.tilt + piece.radius / 4, piece.y);
+            ctx.lineTo(piece.x + piece.tilt, piece.y + piece.tilt + piece.radius / 4);
+            ctx.stroke();
+        });
+        time += timeDelta;
+        requestAnimationFrame(update);
+    }
+    update();
+
+    // Stop the animation after 10 seconds
+    setTimeout(() => {
+        // Clear the canvas and stop the animation
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, 10000); // 10000 milliseconds = 10 seconds
+}
+
+// Button click event
+document.getElementById('confettiButton').addEventListener('click', renderWrappingConfetti);
+
+// Resize canvas on window resize
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});

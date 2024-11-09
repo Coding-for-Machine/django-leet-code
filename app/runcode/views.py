@@ -47,9 +47,12 @@ def code_page(request, id, slug):
     }
     # print("payth", request.path)
     lang = Language.objects.all()
+    problems =  Problems.objects.all()
     problem = get_object_or_404(Problems, id=id, slug=slug)
     context["language"]=lang
     context['problem']=problem 
+    context['problems']=problems 
+
     if request.method=="POST":
         
         # messages.error(request, "rwspons")

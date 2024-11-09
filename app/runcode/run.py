@@ -54,7 +54,6 @@ def run_code(request, problem_id, *args, **kwargs):
                 list1=[{'input':{str(input_code).replace("\r", "<br>").replace("\n", "&#9").replace("\'input\'", "<dd></dd>")}}, {"error": {stderr}}, {"stdout": "<br />".join(str(data).split("\\n"))}]
                
                 return HttpResponse(list1)
-                
                
     else:
         return HttpResponse("===Bu Boshqa Dasturlash Tili==!!!")

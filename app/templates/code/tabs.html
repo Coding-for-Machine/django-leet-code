@@ -31,6 +31,8 @@
 		<div x-show="selectedTab === 'groups'" id="tabpanelGroups" role="tabpanel" aria-label="groups">
 			<div class="relative">
 				{% include "code/tabs_butoms.html" %}
+				<p class="text-xl text-black">{{ problem.name }}</p>
+				{{problem.body|safe}}
 			</div>
 		</div>
 		<div x-show="selectedTab === 'likes'" id="tabpanelLikes" role="tabpanel" aria-label="likes"><b><a href="#" class="underline">Likes</a></b> tab is selected</div>
