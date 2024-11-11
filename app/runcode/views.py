@@ -52,6 +52,7 @@ def code_page(request, id, slug):
     context["language"]=lang
     context['problem']=problem 
     context['problems']=problems 
+    context['yaxshi']=True
 
     if request.method=="POST":
         

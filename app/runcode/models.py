@@ -136,17 +136,6 @@ class Comments(models.Model):
         return super(Comments, self).save(*args, **kwargs)
 
 
-class Unittestproblem(models.Model):
-    input_code = models.TextField()
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    problem = models.ForeignKey(Problems, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    created = models.DateTimeField(auto_now=True)
-    updated = models.DateTimeField(auto_now_add=True)
-
-    def str(self):
-        return self.input_code[:10]
-
 
 class Algorithm(models.Model):
     problems = models.ForeignKey(Problems, on_delete=models.CASCADE)

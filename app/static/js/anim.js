@@ -6,18 +6,21 @@ canvas.height = window.innerHeight;
 
 const colors = ['#FF0D72', '#0DC2FF', '#0DFF72', '#F3FF0D', '#FF7E0D'];
 
+
 function renderWrappingConfetti() {
-    const timeDelta = 0.05;
-    const xAmplitude = 0.5;
-    const yAmplitude = 1;
-    const xVelocity = 2;
-    const yVelocity = 3;
+    
+    const timeDelta = 0.09;
+    const xAmplitude = 3;
+    const yAmplitude = 3;
+    const xVelocity = 20;
+    const yVelocity = 2;
 
     let time = 0;
     const confetti = [];
+    let animationId; // Variable to store the animation frame ID
 
     for (let i = 0; i < 100; i++) {
-        const radius = Math.floor(Math.random() * 50) + 5; // Random radius
+        const radius = Math.floor(Math.random() * 30) + 5; // Random radius
         const tilt = Math.floor(Math.random() * 10) - 10;
         const xSpeed = Math.random() * xVelocity - xVelocity / 2;
         const ySpeed = Math.random() * yVelocity;
@@ -56,14 +59,14 @@ function renderWrappingConfetti() {
             ctx.stroke();
         });
         time += timeDelta;
-        requestAnimationFrame(update);
+        animationId = requestAnimationFrame(update); // Store the animation frame ID
     }
     update();
 
     // Stop the animation after 10 seconds
     setTimeout(() => {
-        // Clear the canvas and stop the animation
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        cancelAnimationFrame(animationId); // Cancel the animation
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
     }, 10000); // 10000 milliseconds = 10 seconds
 }
 
@@ -75,3 +78,4 @@ window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
+
