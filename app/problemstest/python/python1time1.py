@@ -1,7 +1,6 @@
 import time
 import sys
 
-
 def linear_search(arr, target):
     for index, value in enumerate(arr):
         if value == target:

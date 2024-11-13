@@ -12,6 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/mode/python/python.min.js" integrity="sha512-/mavDpedrvPG/0Grj2Ughxte/fsm42ZmZWWpHz1jCbzd5ECv8CB7PomGtw0NAnhHmE/lkDFkRMupjoohbKNA1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- Tailwind css -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.3"></script>
   <style>
     /* set codemirror ide height to 100% of the textarea */
     /* From Uiverse.io by hamoode-taha-04 */
@@ -80,13 +81,13 @@
 {% endblock %}
 
 {% block content %}
+<form method="POST" action="." hx-post="{{ problem.get_absolute_url }}" hx-swap="outerHTML" hx-target="#message">
+  {% csrf_token %}
   {% include 'code/navbar.html' %}
-  {% include "code/respons.html" %}
   <div class="cont">
     <canvas id="confettiCanvas"></canvas>
     <div class="column" id="left-column">
       {% include 'code/tabs.html' %}
-      <div id="confettiCanvas"></div>
     </div>
     <div class="resizer" id="column-resizer">
       <p class="text-xs text-gray-700">| |</p>
@@ -104,10 +105,12 @@
         </svg>
       </div>
       <div class="row" id="bottom-row">
-        {% include 'code/ouput.html' %}
+        {% include 'code/output.html' %}
       </div>
     </div>
   </div>
+</form>
+<div id="message"></div>
 {% endblock %}
 {% block scripts %}
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -167,8 +170,9 @@
       indentUnit: 4,
       matchBrackets: true
     })
-    
-    editor.setValue(`sum([1, 2, 3, 4, 5])`)
+    {% if problem %}
+    editor.setValue(`{{problem.function_or_class_name}} # kodni shu yerdan boshlab yozing`)
+    {% endif %}
     output.value = 'Boshlanmoqda...\n'
     
     async function main() {

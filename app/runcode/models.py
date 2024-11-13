@@ -57,6 +57,7 @@ class Problems(models.Model):
         default="OSON",
     )
     name = models.CharField(max_length=250)
+    function_or_class_name= models.CharField(max_length=250, help_text="M: def main(args1, args2, ...) yoke class class_name: kiyin funkiya nomi. class larni yozgandan so'ng tab qo'yishni unitmang!!!")
     body = CKEditor5Field()
     slug = models.SlugField(max_length=250, blank=True)
     active = models.BooleanField(default=True)
@@ -78,7 +79,7 @@ class Problems(models.Model):
             now_slug = slugify(str(self.name))
             ex = Problems.objects.filter(slug=now_slug).exists()
             while ex:
-                now_slug = slugify(str(self.name) + str(get_roundom_code))
+                now_slug = slugify(str(self.name) + str(get_roundom_code()))
                 ex = Problems.objects.filter(slug=now_slug).exists()
             self.slug = now_slug
         return super(Problems, self).save(*args, **kwargs)

@@ -43,9 +43,7 @@ def problems_list(request):
 #     return render(request, "problems/problems_list.html",{"url": url})
 
 def code_page(request, id, slug):
-    context={
-    }
-    # print("payth", request.path)
+    context={}
     lang = Language.objects.all()
     problems =  Problems.objects.all()
     problem = get_object_or_404(Problems, id=id, slug=slug)
@@ -53,25 +51,12 @@ def code_page(request, id, slug):
     context['problem']=problem 
     context['problems']=problems 
     context['yaxshi']=True
-
     if request.method=="POST":
-        
-        # messages.error(request, "rwspons")
-        if 'tekshirish' in request.method=="POST":
-            pk = request.POST.get('tekshirish')
-            print(pk)
-            pass
-        elif 'save' in request.method=="POST":
-            pk = request.POST.get('tekshirish')
-            print(pk)
-            pass
-       
-        
         if request.POST.get("code") is not None and request.POST.get('language') is not None and request.user:
             code = request.POST.get('code')
             language = request.POST.get('language')
             lan_filter = Language.objects.get(name=language)
-            Answer.objects.create(language=lan_filter,answer=code, problem=problem, user=request.user)
+            Answer.objects.create(language=lan_filter, answer=code, problem=problem, user=request.user)
             # return HttpResponseRedirect(reverse(problem.get_absolute_url))
             context['me']="saved"
             return HttpResponse(run_code(request, id))

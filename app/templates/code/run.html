@@ -1,8 +1,7 @@
 <div class="flex gap-2">
     <!-- Button 2 -->
     <div x-data="{ isOpen: false }">
-        <button 
-            type="submit" 
+        <button type="button"
             onclick="evaluatePython()"
             {% comment %} hx-post="{% url 'code' problems.id %} " hx-target="#content-div" {% endcomment %}
             @mouseover="isOpen = true"
@@ -33,8 +32,8 @@
     <!--1 bar-->
     <div x-data="{ isOpen: false }">
         <button
-        id="confettiButton"
         type="submit" 
+        id="confettiButton"
 
             @mouseover="isOpen = true"
             @mouseleave="isOpen = false"
