@@ -37,7 +37,7 @@ def create_dirs(dir_name):
 
 class Unittestproblems(models.Model):
     problem = models.ForeignKey(Problems, on_delete=models.CASCADE)
-    language = models.OneToOneField(Language, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
     unit_test_class_name = models.CharField(help_text="pastdagi kiritgan class nomi bo'lishi kerak!!!", max_length=100)
     unit_test_code = models.TextField(help_text="misol: python dasturlash tilidagi unittest orqali yozilgan kod bo'lish kerak yoki boshqa dasturlash tilida u dasturlash tillari qo'shilgan bo'lsa!!!")
     created = models.DateTimeField(auto_now=True)
@@ -62,7 +62,7 @@ class Unittestproblems(models.Model):
 
 class Memorytime(models.Model):
     problem = models.ForeignKey(Problems, on_delete=models.CASCADE)
-    language = models.OneToOneField(Language, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
     memory_time_code = models.TextField(help_text="misol: python dasturlash tilidagi tracemalloc (3.4 versiadan yuqorida ishlaydi) orqali yozilgan kod bo'lish kerak yoki boshqa dasturlash tilida u dasturlash tillari qo'shilgan bo'lsa")
     line1 = models.TextField(help_text="User  uchun 1 kod(python dasturlash tilidagi tracemalloc yozilgan)")
     line2 = models.TextField(help_text="User  uchun 1 kod(python dasturlash tilidagi tracemalloc yozilgan)")
